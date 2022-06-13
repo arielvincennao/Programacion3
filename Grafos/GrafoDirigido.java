@@ -2,6 +2,7 @@ package Grafos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 public class GrafoDirigido<T> implements Grafo<T> {
@@ -91,21 +92,40 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return this.cantidadArcos;
 	}
 
+	public Iterator<Integer> obtenerVertices() {
+		return vertices.keySet().iterator();
+	}
+	
+	
+	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
+		ArrayList<Integer> adyacentes = new ArrayList<>();
+		if (contieneVertice(verticeId)) { // Complejidad: O(1)
+			Iterator<Arco<T>> it = obtenerArcos(verticeId); // Complejidad: O(1)
+			
+			while (it.hasNext()) { // Complejidad: O(a) a = Cantidad de arcos del vértice
+				Arco<T> arco = it.next(); // Complejidad: O(1)
+				adyacentes.add(arco.getVerticeDestino()); // Complejidad: O(1)
+			}
+		}
+		return adyacentes.iterator();
+	}
+	
+	@Override
+	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
+		ArrayList<Arco<T>> arcos = new ArrayList<>();
+		if (contieneVertice(verticeId)) { // Complejidad: O(1)
+			arcos = this.vertices.get(verticeId); // Complejidad: O(1)
+		}
+		return arcos.iterator();
+	}
+
 	@Override
 	public ArrayList<Arco<T>> getArcosDeVertice(int clave) {
-		ArrayList<Arco<T>> lista = new ArrayList<Arco<T>>();
-		//Si lo contiene
-		if(this.contieneVertice(clave)){
-			for(Entry<Integer, ArrayList<Arco<T>>> v : vertices.entrySet()){
-				Integer key = v.getKey();									
-			    ArrayList<Arco<T>> value = v.getValue();
-			    if(key.equals(clave)){
-			    	lista.addAll(value);
-			    }
-			}
-		}else return null;
-		return lista;
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
+
 
 	
 

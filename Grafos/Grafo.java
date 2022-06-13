@@ -35,4 +35,6 @@ public interface Grafo<T> {
 		
 		public ArrayList<Arco<T>> getArcosDeVertice(int clave);
 
+		Iterator<Arco<T>> obtenerArcos(int verticeId);
+
 }
